@@ -112,6 +112,7 @@ class Battery(ABC):
         self.allow_max_voltage: bool = True  # save state to preserve on restart
         self.max_voltage_start_time: int = None  # save state to preserve on restart
         self.transition_start_time: int = None
+        self.float_transition_cond_starttime: int = 0
         # self.control_voltage_at_transition_start = None  # seems unused
         self.charge_mode: str = None
         self.charge_mode_debug: str = ""

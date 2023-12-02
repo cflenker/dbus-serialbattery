@@ -317,13 +317,15 @@ class Battery(ABC):
                         penaltySum += voltage - utils.SOC_RESET_VOLTAGE
 
             voltageDiff = self.get_max_cell_voltage() - self.get_min_cell_voltage()
+            
+            float_transition_cond = self.max_battery_voltage <= voltageSum and voltageDiff <= utils.CELL_VOLTAGE_DIFF_KEEP_MAX_VOLTAGE_UNTIL and self.allow_max_voltage
+            if (not float_transition_cond):
+                self.float_transition_cond_starttime = current_time
 
             if self.max_voltage_start_time is None:
                 # start timer, if max voltage is reached and cells are balanced
                 if (
-                    self.max_battery_voltage <= voltageSum
-                    and voltageDiff <= utils.CELL_VOLTAGE_DIFF_KEEP_MAX_VOLTAGE_UNTIL
-                    and self.allow_max_voltage
+                    float_transition_cond and (current_time-self.float_transition_cond_starttime) > utils.FLOAT_TRANSITION_DEBOUNCE_SEC
                 ):
                     self.max_voltage_start_time = current_time
 

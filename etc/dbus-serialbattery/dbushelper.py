@@ -177,7 +177,9 @@ class DbusHelper:
 
                     if "SocCalc" in value:
                         self.battery.soc_calc = float(value["SocCalc"])
-                        logger.info(f"Soc_calc read from dbus: {int(self.battery.soc_calc)}")
+                        logger.info(
+                            f"Soc_calc read from dbus: {int(self.battery.soc_calc)}"
+                        )
                     else:
                         logger.info(f"Soc_calc not found in dbus")
 
